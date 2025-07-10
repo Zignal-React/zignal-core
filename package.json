@@ -18,6 +18,7 @@
   ],
   "author": "Thinh.Nguyen",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "build": "vite build",
     "test": "vitest",
