@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
 
+export type ZignalStore<T> = {
+	get: () => T;
+	set: (v: T) => void;
+	subscribe: (fn: () => void) => () => void;
+};
+
 export function createZignal<T>(initial: T) {
 	let value = initial;
 	const listeners = new Set<() => void>();
@@ -20,7 +26,7 @@ export function createZignal<T>(initial: T) {
 		}, []);
 		return [get(), set] as [T, (v: T) => void];
 	};
-	type ZignalHook = typeof useZignal & { store: { get: () => T; set: (v: T) => void; subscribe: (fn: () => void) => () => void } };
+	type ZignalHook = typeof useZignal & { store: ZignalStore<T> };
 	(useZignal as ZignalHook).store = { get, set, subscribe };
 	return useZignal as ZignalHook;
 } 
